@@ -32,8 +32,8 @@ pipeline {
                 script {
                     // Run tests inside Docker and save junit.xml outside the container
                     sh '''
-                        npm install --save-dev mocha mocha-junit-reporter
-                        npm run test -- --reporters=jest-junit --testResultsProcessor=jest-junit --outputDirectory=test-results
+                        npm install --save-dev jest jest-junit
+                        npm run test
                     '''
                 }
             }
