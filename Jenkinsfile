@@ -29,10 +29,17 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    test -f build/index.html
-                    npm test
-                '''
+                script {
+                    // Run tests inside Docker and save junit.xml outside the container
+                    sh '''
+                        # Install testing dependencies
+                        npm install --save-dev mocha mocha-junit-reporter
+
+                        # Run tests and generate JUnit XML file in test-results directory
+                        mkdir -p test-results  # Make sure the directory exists
+                        npm run test -- --reporter mocha-junit-reporter --reporter-options mochaFile=test-results/junit.xml
+                    '''
+                }
             }
         }
     }
