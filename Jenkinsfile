@@ -21,6 +21,11 @@ pipeline {
                     image 'node:18-alpine'
                     reuseNode true
                 }
+                post {
+                    always {
+                        junit 'test-results/junit.xml'
+                    }
+                }
             }
 
             steps {
