@@ -21,11 +21,6 @@ pipeline {
                     image 'node:18-alpine'
                     reuseNode true
                 }
-                post {
-                    always {
-                        junit 'test-results/junit.xml'
-                    }
-                }
             }
 
             steps {
@@ -34,6 +29,11 @@ pipeline {
                         npm install --save-dev jest jest-junit
                         npm run test
                     '''
+                }
+                post {
+                    always {
+                        junit 'test-results/junit.xml'
+                    }
                 }
             }
         }
