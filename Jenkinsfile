@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        NETLIFY_SITE_ID = 'd9ab072d-8b55-440c-921d-dfbb6e7d6786'
+    }
+
     stages {
         stage('Build') {
             agent {
@@ -41,11 +45,10 @@ pipeline {
             }
             steps {
                 script {
-                    def netlifySiteID = '874caac1-235f-4e36-a524-af99313e038f'
-                    def netlifyAccessToken = 'nfp_ptqanm6NWhv6rz8oTWurNAncvsVhrJZdbc9c'
                     sh '''
-                    npm install netlify-cli --save-dev
-                    npx netlify deploy --site ${netlifySiteID} --auth ${netlifyAccessToken} --dir ./build --prod
+                    npm install netlify-cli
+                    node_modules/.bin/netlify --version
+                    echo "Deploy to production. Site ID = $NETLIFY_SITE_ID"
                     '''
                 }
             }
