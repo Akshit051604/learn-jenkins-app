@@ -40,10 +40,14 @@ pipeline {
                 }
             }
             steps {
-                sh '''
-                    npm install netlify-cli
-                    node_modules/.bin/netlify --version
-                '''
+                script {
+                    def netlifySiteID = '874caac1-235f-4e36-a524-af99313e038f'
+                    def netlifyAccessToken = 'nfp_ptqanm6NWhv6rz8oTWurNAncvsVhrJZdbc9c'
+                    sh '''
+                    npm install netlify-cli --save-dev
+                    npx netlify deploy --site ${netlifySiteID} --auth ${netlifyAccessToken} --dir ./build --prod
+                    '''
+                }
             }
         }
         
